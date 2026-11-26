@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Minhas Finanças</title>
+  <meta name="theme-color" content="#0f766e">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="Finanças">
+  <link rel="manifest" href="manifest.json">
+  <link rel="icon" href="icons/icon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="icons/icon-192.png">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <!-- Tela de login (só aparece quando o Firebase está configurado) -->
+  <section id="tela-login" class="login" hidden>
+    <div class="login-card">
+      <div class="logo">R$</div>
+      <h1>Minhas Finanças</h1>
+      <p class="muted">Entre para sincronizar seus dados entre o celular e o computador.</p>
+      <button id="btn-google" class="btn btn-primario btn-largo">Entrar com Google</button>
+      <div class="divisor"><span>ou com e-mail</span></div>
+      <form id="form-login">
+        <input type="email" id="login-email" placeholder="E-mail" autocomplete="email" required>
+        <input type="password" id="login-senha" placeholder="Senha (mín. 6 caracteres)" autocomplete="current-password" minlength="6" required>
+        <div class="linha-botoes">
+          <button type="submit" class="btn btn-primario">Entrar</button>
+          <button type="button" id="btn-criar-conta" class="btn">Criar conta</button>
+        </div>
+      </form>
+      <p id="login-erro" class="erro" hidden></p>
+    </div>
+  </section>
+
+  <!-- App -->
+  <div id="app" hidden>
+    <header class="topo">
+      <div class="mes-nav" id="mes-nav">
+        <button class="btn-icone" data-mes="-1" aria-label="Mês anterior">‹</button>
+        <h2 id="mes-titulo"></h2>
+        <button class="btn-icone" data-mes="1" aria-label="Próximo mês">›</button>
+      </div>
+      <span id="status-sync" class="status-sync"></span>
+    </header>
+
+    <main id="conteudo"></main>
+
+    <button id="btn-novo" class="fab" aria-label="Novo lançamento">+</button>
+
+    <nav class="abas">
+      <button data-aba="resumo" class="ativa"><span>📊</span>Resumo</button>
+      <button data-aba="lancamentos"><span>📋</span>Lançamentos</button>
+      <button data-aba="previsao"><span>📈</span>Previsão</button>
+      <button data-aba="metas"><span>🎯</span>Metas</button>
+      <button data-aba="config"><span>⚙️</span>Ajustes</button>
+    </nav>
+  </div>
+
+  <!-- Modal de lançamento -->
+  <dialog id="modal-lanc" class="modal">
+    <form id="form-lanc" method="dialog">
+      <div class="modal-topo">
+        <h3 id="modal-titulo">Novo lançamento</h3>
+        <button type="button" class="btn-icone" data-fechar aria-label="Fechar">✕</button>
+      </div>
+
+      <div class="toggle-tipo">
+        <label><input type="radio" name="tipo" value="saida" checked><span>Saída</span></label>
+        <label><input type="radio" name="tipo" value="entrada"><span>Entrada</span></label>
+      </div>
+
+      <label class="campo">
+        <span id="rotulo-valor">Valor (R$)</span>
+        <input type="text" name="valor" inputmode="decimal" placeholder="0,00" required autocomplete="off">
+      </label>
+
+      <label class="campo">
+        <span>Descrição</span>
+        <input type="text" name="descricao" placeholder="Ex: Aluguel, Mercado, Salário" maxlength="80" required>
+      </label>
+
+      <div class="campo">
+        <span>Categoria</span>
+        <div id="grade-cat" class="grade-cat"></div>
+      </div>
+
+      <label class="campo">
+        <span>Periodicidade</span>
+        <select name="periodicidade" id="sel-periodo"></select>
+      </label>
+
+      <label class="campo" id="campo-parcelas" hidden>
+        <span>Número de parcelas</span>
+        <input type="number" name="parcelas" min="2" max="120" value="2">
+        <small id="info-parcela" class="muted"></small>
+      </label>
+
+      <div class="duas-col">
+        <label class="campo">
+          <span id="rotulo-data">Data</span>
+          <input type="date" name="data" required>
+        </label>
+        <label class="campo" id="campo-fim" hidden>
+          <span>Termina em (opcional)</span>
+          <input type="date" name="dataFim">
+        </label>
+      </div>
+
+      <div class="modal-acoes">
+        <button type="button" id="btn-excluir" class="btn btn-perigo" hidden>Excluir</button>
+        <button type="submit" class="btn btn-primario">Salvar</button>
+      </div>
+    </form>
+  </dialog>
+
+  <!-- Modal de meta -->
+  <dialog id="modal-meta" class="modal">
+    <form id="form-meta" method="dialog">
+      <div class="modal-topo">
+        <h3 id="meta-titulo">Nova meta</h3>
+        <button type="button" class="btn-icone" data-fechar aria-label="Fechar">✕</button>
+      </div>
+      <label class="campo"><span>Nome da meta</span>
+        <input type="text" name="nome" placeholder="Ex: Reserva de emergência" maxlength="60" required></label>
+      <label class="campo"><span>Valor da meta (R$)</span>
+        <input type="text" name="valor" inputmode="decimal" placeholder="50.000,00" required autocomplete="off"></label>
+      <label class="campo"><span>Quanto já tenho guardado para ela (R$)</span>
+        <input type="text" name="guardado" inputmode="decimal" placeholder="0,00" autocomplete="off"></label>
+      <label class="campo"><span>Quero atingir até (opcional)</span>
+        <input type="month" name="prazo"></label>
+      <div class="modal-acoes">
+        <button type="button" id="btn-excluir-meta" class="btn btn-perigo" hidden>Excluir</button>
+        <button type="submit" class="btn btn-primario">Salvar</button>
+      </div>
+    </form>
+  </dialog>
+
+  <div id="toast" class="toast" hidden></div>
+
+  <script type="module" src="app.js"></script>
+</body>
+</html>
