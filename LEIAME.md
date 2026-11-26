@@ -3,6 +3,7 @@
 App de finanças pessoais que roda no navegador do computador e do celular (instalável como app), com sincronização pela nuvem.
 
 **Endereço do app:** https://organiza-financas.github.io/
+
 **Código:** repositório `organiza-financas/organiza-financas.github.io` no GitHub (público; os dados financeiros não ficam lá).
 
 Cada pessoa cria a própria conta no login e só enxerga os próprios lançamentos.
