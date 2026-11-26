@@ -10,10 +10,10 @@
 //  do Firestore, que só deixam cada usuário ler os próprios lançamentos.
 // ===================================================================
 export const firebaseConfig = {
-  apiKey: "",
-  authDomain: "",
-  projectId: "",
-  storageBucket: "",
-  messagingSenderId: "",
-  appId: ""
+  apiKey: "AIzaSyD_yVZBIase63LdmR0ftYfrGicFrumrrYU",
+  authDomain: "organiza-financas-b9a6d.firebaseapp.com",
+  projectId: "organiza-financas-b9a6d",
+  storageBucket: "organiza-financas-b9a6d.firebasestorage.app",
+  messagingSenderId: "117065543028",
+  appId: "1:117065543028:web:77fbda312e2e6e23c79021"
 };
