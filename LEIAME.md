@@ -2,6 +2,11 @@
 
 App de finanças pessoais que roda no navegador do computador e do celular (instalável como app), com sincronização pela nuvem.
 
+**Endereço do app:** https://organiza-financas.github.io/
+**Código:** repositório `organiza-financas/organiza-financas.github.io` no GitHub (público; os dados financeiros não ficam lá).
+
+Cada pessoa cria a própria conta no login e só enxerga os próprios lançamentos.
+
 ## O que tem no app
 
 | Aba | O que faz |
@@ -54,7 +59,11 @@ O Firebase é um serviço gratuito do Google que guarda os dados e cuida do logi
 
 > Os valores do `firebase-config.js` **não são senhas**: o Firebase foi feito para eles ficarem visíveis no site. Quem protege os dados são as regras do item 7. Cada pessoa só lê e grava os próprios lançamentos.
 
-## Passo 2: publicar no GitHub Pages
+## Passo 2: publicar no GitHub Pages (já feito)
+
+> O app já está publicado em https://organiza-financas.github.io/. As instruções abaixo ficam só como referência, caso precise publicar de novo em outro lugar.
+
+### Referência
 
 O GitHub Pages hospeda o app de graça num endereço como `https://SEU-USUARIO.github.io/minhas-financas/`.
 
@@ -66,7 +75,7 @@ O GitHub Pages hospeda o app de graça num endereço como `https://SEU-USUARIO.g
 3. Vá em **Settings → Pages**. Em *Branch*, escolha `main` e `/ (root)` e salve.
 4. Espere 1 ou 2 minutos. O endereço aparece no topo da mesma página.
 
-**Último ajuste no Firebase:** em **Authentication → Configurações → Domínios autorizados**, clique em **Adicionar domínio** e coloque `SEU-USUARIO.github.io` (sem `https://` e sem a barra final). Sem isso o login dá erro de "domínio não autorizado".
+**Último ajuste no Firebase:** em **Authentication → Configurações → Domínios autorizados**, clique em **Adicionar domínio** e coloque `organiza-financas.github.io` (sem `https://` e sem a barra final). Sem isso o login dá erro de "domínio não autorizado".
 
 ## Passo 3: instalar no celular e no computador
 
